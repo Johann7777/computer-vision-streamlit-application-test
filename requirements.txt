@@ -2,5 +2,4 @@ torch
 torchvision
 streamlit
 pillow
-io
 os

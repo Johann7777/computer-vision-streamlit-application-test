@@ -105,7 +105,7 @@ def main():
 
 def load_model():
     model_ft, input_size = initialize_model("squeezenet", 10, True)
-    checkpoint = torch.load(modeldir)
+    checkpoint = torch.load(modeldir, map_location=torch.device('cpu'))
     model_ft.load_state_dict(checkpoint['model_state_dict'])
     model_ft.eval()
     return model_ft

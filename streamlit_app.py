@@ -21,6 +21,7 @@ import io
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 modeldir = os.path.join(__location__, 'squeezenet.pt')
+print(modeldir)
 uploaded_file = None
 
 classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
@@ -104,14 +105,8 @@ def main():
 
 def load_model():
     model_ft, input_size = initialize_model("squeezenet", 10, True)
-
-    try:
-        torch.load(modeldir)
-    except:
-        print("Not Found")
-    else:
-        checkpoint = torch.load(modeldir)
-        model_ft.load_state_dict(checkpoint['model_state_dict'])
+    checkpoint = torch.load(modeldir)
+    model_ft.load_state_dict(checkpoint['model_state_dict'])
     model_ft.eval()
     return model_ft
 

@@ -21,19 +21,11 @@ import io
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 modeldir = os.path.join(__location__, 'squeezenet.pt')
-categorydir = os.path.join(__location__, 'ModelCategories')
-
+print(modeldir)
 uploaded_file = None
 
-model_categories = os.listdir(categorydir)
 classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-class ModelCategory:
-    def __init__(self, name: str, ):
-        self.name = name
-
-    def __str__(self):
-        return f"{self.name}({self.age})"
 
 def initialize_model(model_name, num_classes, use_pretrained=False):
     # Initialize these variables which will be set in this if statement. Each of these
@@ -150,35 +142,17 @@ def predict(model, categories, image):
     for i in range(top5_prob.size(0)):
         st.write(categories[top5_catid[i]], top5_prob[i].item())
 
-def load_dataset_options(dir: str):
-    option = st.selectbox('Please select the model type:', os.listdir(dir))
-    filelocation = dir + r'\\' + option
-    return option, filelocation
-def load_model_options():
-    architecture_dir = "None"
-    #First, let the user select the type of model they would like to use
-    model_type = st.selectbox('Please select what type of model you would like to use:', os.listdir(categorydir))
-    if(model_type is not None):
-        model_type_dir = categorydir + r'\\' + model_type
-
-        #Next, let the user select which of the available models for the type they would like to use
-        architecture = st.selectbox('Please select one of the available models:', os.listdir(model_type_dir))
-        if(architecture is not None):
-            architecture_dir = model_type_dir + r'\\' + architecture
-
-    return architecture, architecture_dir
 def main():
     st.title('Pretrained model demo')
-    selected_architecture, selected_architecture_dir = load_model_options()
-    if(selected_architecture == "squeezenet.pt"):
-        model = load_model()
-        categories = load_labels()
-        image = load_image()
-        
-        result = st.button('Run on image')
-        if result:
-            st.write('Calculating results...')
-            predict(model, categories, image)
-        
+
+    model = load_model()
+    categories = load_labels()
+    image = load_image()
+    
+    result = st.button('Run on image')
+    if result:
+        st.write('Calculating results...')
+        predict(model, categories, image)
+       
 if __name__ == '__main__':
     main()

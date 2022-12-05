@@ -164,7 +164,7 @@ def load_model_options():
         #Next, let the user select which of the available models for the type they would like to use
         architecture = st.selectbox('Please select one of the available models:', os.listdir(model_type_dir))
         if(architecture is not None):
-            architecture_dir = model_type_dir + r'/' + architecture
+            architecture_dir = model_type_dir + r'\\' + architecture
 
     return architecture, architecture_dir
 def main():
